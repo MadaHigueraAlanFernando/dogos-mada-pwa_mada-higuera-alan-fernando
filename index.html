@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dogos Mada — PWA de ventas</title>
+  <!-- La descripción es el texto que Google muestra bajo el título en los
+       resultados de búsqueda (Lighthouse la revisa en la categoría SEO) -->
+  <meta name="description" content="Dogos mada: catálogo de alimentos.">
+
+  <!-- Estas 3 líneas son las que convierten este sitio en una PWA instalable -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#CA8A04">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="css/estilos.css">
+
+  <!-- Leaflet: librería de mapas gratuita (sin API key) que usamos solo para
+       dibujar la ruta hasta la sucursal (ver js/geolocalizacion.js) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+</head>
+<body>
+
+  <!-- ============ APP SHELL ============
+       El "app shell" es el esqueleto que SIEMPRE se ve igual (header, nav,
+       contenedores vacíos). El Service Worker lo cachea completo para que
+       cargue instantáneo incluso sin internet; solo los DATOS de adentro
+       cambian (los llena JavaScript, ver csr.js). -->
+
+  <header class="appbar" style="display:flex; align-items:center; justify-content:space-between; padding:10px 16px;">
+    <div class="marca" style="display:flex; align-items:center; gap:12px;">
+        <img src="img/DogosMada.jpg" alt="Logo de Dogos Mada"
+             width="56" height="56"
+             style="width:56px; height:56px; object-fit:contain; border-radius:10px; background:#fff;">
+        <h1 style="margin:0; font-size:1.4rem;">Dogos Mada</h1>
+    </div>
+    <!-- este <span> lo actualiza app.js para mostrar conectado/sin conexión -->
+    <span id="estado-conexion" class="pill">conectado</span>
+</header>
+
+  <main>
+    <!-- ---- Sección 1: Catálogo (CSR) ---- -->
+    <section>
+      <h2>Catálogo</h2>
+      <!-- Este div empieza VACÍO a propósito: si ves el código fuente (Ctrl+U)
+           no verás ningún producto aquí. JavaScript (csr.js) lo llena DESPUÉS
+           de que la página ya cargó: por eso es "Renderizado en el Cliente" (CSR). -->
+      <!-- Mientras llegan los datos, 4 tarjetas "esqueleto" (una por producto de
+           catalogo.json) apartan el espacio: así el Carrito no "brinca" hacia
+           abajo cuando csr.js dibuja los productos (Lighthouse lo mide como CLS). -->
+      <div id="catalogo" class="grid" aria-busy="true" aria-label="Cargando catálogo">
+        <div class="producto producto--cargando" aria-hidden="true">
+          <div class="producto__foto"></div>
+          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+          <button type="button" disabled>Agregar al carrito</button>
+        </div>
+        <div class="producto producto--cargando" aria-hidden="true">
+          <div class="producto__foto"></div>
+          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+          <button type="button" disabled>Agregar al carrito</button>
+        </div>
+        <div class="producto producto--cargando" aria-hidden="true">
+          <div class="producto__foto"></div>
+          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+          <button type="button" disabled>Agregar al carrito</button>
+        </div>
+        <div class="producto producto--cargando" aria-hidden="true">
+          <div class="producto__foto"></div>
+          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+          <button type="button" disabled>Agregar al carrito</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Sección 2: Carrito ---- -->
+    <!-- <section>
+      <h2>Carrito</h2>
+      <ul id="carrito-lista"></ul>
+      <p>Total: $<span id="carrito-total">0</span></p>
+      <button id="btn-sincronizar" type="button">Sincronizar carrito</button>
+      <p id="carrito-mensaje" class="mensaje"></p>
+    </section> -->
+
+    <!-- ---- Sección 3: Notificaciones ---- -->
+    <!-- <section>
+      <h2>Notificaciones de ofertas</h2>
+      <button id="btn-notificar" type="button">Activar notificaciones</button>
+      <p id="notificaciones-mensaje" class="mensaje"></p>
+    </section> -->
+
+    <!-- ---- Sección 4: Ubicación (característica del dispositivo) ---- -->
+    <!-- <section>
+      <h2>Distancia a la sucursal</h2>
+      <p class="sucursal-info">Sucursal única: <strong>Universidad Tecnológica de Hermosillo (UTH)</strong>, Hermosillo, Sonora.</p>
+      <button id="btn-ubicacion" type="button">Usar mi ubicación</button>
+      <p id="ubicacion-mensaje" class="mensaje"></p> -->
+      <!-- Empieza oculto: geolocalizacion.js le quita "hidden" y lo llena de mapa
+           en cuanto tiene tu ubicación y la ruta hasta la sucursal -->
+      <!-- <div id="mapa-ruta" class="mapa" hidden></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Unidad 2 · PWA de ventas de ejemplo</p>
+  </footer> -->
+
+  <!-- Cargamos los scripts al final del <body>: así el HTML ya existe
+       cuando el JavaScript intenta buscar los elementos con document.getElementById -->
+  <!-- <script src="js/carrito.js"></script>-->
+  <script src="js/csr.js"></script>
+  <!--script src="js/notificaciones.js"></script> -->
+  <!-- Leaflet debe cargar ANTES de geolocalizacion.js: ese script usa el
+       objeto global "L" que esta librería crea -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/geolocalizacion.js"></script>
+  <script src="js/app.js"></script> -->
+  <!-- Registro del Service Worker. Va aquí, dentro del HTML y en una sola línea
+       (navigator.serviceWorker.register("sw.js")), porque así lo detecta PWABuilder:
+       lee el index.html buscando ese texto, y si no lo halla abre la página y pregunta
+       de inmediato si ya hay un Service Worker; por eso no esperamos al evento "load". -->
+  <!-- <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then((registro) => console.log("Service Worker registrado con éxito:", registro.scope))
+        .catch((error) => console.error("No se pudo registrar el Service Worker:", error));
+    }
+  </script> -->
+
+  <footer class="pie">
+    <p>Dogueria Mada · hot dogs sonorenses</p>
+    <p>Mar-Dom 7:00 PM - 2:00 AM · Blvd. kino #100 · Tel: (662) 341-5655</p>
+    <p>MADA HIGUERA ALAN FERNANDO · Grupo 10-1</p>
+  </footer>
+</body>
+</html>

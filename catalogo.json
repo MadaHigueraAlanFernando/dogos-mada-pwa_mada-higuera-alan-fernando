@@ -1,0 +1,17 @@
+[
+  {"id":1,"nombre":"Dogo sencillo","categoria":"Dogos","precio":45,"stock":20,"imagen":"img/dogo-sencillo.jpg"},
+  {"id":2,"nombre":"Doble salchicha","categoria":"Dogos","precio":60,"stock":20,"imagen":"img/doble-salchicha.jpg"},
+  {"id":3,"nombre":"Con queso gratinado","categoria":"Dogos","precio":55,"stock":20,"imagen":"img/con-queso-gratinado.jpg"},
+  {"id":4,"nombre":"Dogo chiltepín","categoria":"Dogos","precio":55,"stock":20,"imagen":"img/dogo-chiltepin.jpg"},
+  {"id":5,"nombre":"Mada especial","categoria":"Dogos","precio":70,"stock":20,"imagen":"img/mada-especial.jpg"},
+  {"id":6,"nombre":"Papas locas","categoria":"Otros antojos","precio":80,"stock":20,"imagen":"img/papas-locas.jpg"},
+  {"id":7,"nombre":"Salchipulpos","categoria":"Otros antojos","precio":50,"stock":20,"imagen":"img/salchipulpos.jpg"},
+  {"id":8,"nombre":"Elote en vaso","categoria":"Otros antojos","precio":45,"stock":20,"imagen":"img/elote-en-vaso.jpg"},
+  {"id":9,"nombre":"Nachos con queso","categoria":"Otros antojos","precio":55,"stock":20,"imagen":"img/nachos-con-queso.jpg"},
+  {"id":10,"nombre":"Burro de salchicha","categoria":"Otros antojos","precio":65,"stock":20,"imagen":"img/burro-de-salchicha.jpg"},
+  {"id":11,"nombre":"Refresco","categoria":"Bebidas","precio":30,"stock":20,"imagen":"img/refresco.jpg"},
+  {"id":12,"nombre":"Agua de horchata","categoria":"Bebidas","precio":30,"stock":20,"imagen":"img/agua-de-horchata.jpg"},
+  {"id":13,"nombre":"Agua de tamarindo","categoria":"Bebidas","precio":30,"stock":20,"imagen":"img/agua-de-tamarindo.jpg"},
+  {"id":14,"nombre":"Té helado","categoria":"Bebidas","precio":30,"stock":20,"imagen":"img/te-helado.jpg"},
+  {"id":15,"nombre":"Agua natural","categoria":"Bebidas","precio":20,"stock":20,"imagen":"img/agua-natural.jpg"}
+]
