@@ -34,52 +34,60 @@
              style="width:56px; height:56px; object-fit:contain; border-radius:10px; background:#fff;">
         <h1 style="margin:0; font-size:1.4rem;">Dogos Mada</h1>
     </div>
-    <!-- este <span> lo actualiza app.js para mostrar conectado/sin conexión -->
-    <span id="estado-conexion" class="pill">conectado</span>
+    <div class="appbar-acciones">
+      <!-- este <span> lo actualiza app.js para mostrar conectado/sin conexión -->
+      <span id="estado-conexion" class="pill">conectado</span>
+      <a class="carrito-toggle" href="#carrito-panel">
+        <span aria-hidden="true">🛒</span>
+        <span>Carrito</span>
+        <span id="carrito-cantidad-total" class="carrito-contador" aria-label="Productos en el carrito">0</span>
+      </a>
+    </div>
 </header>
 
   <main>
-    <!-- ---- Sección 1: Catálogo (CSR) ---- -->
-    <section>
-      <h2>Catálogo</h2>
-      <!-- Este div empieza VACÍO a propósito: si ves el código fuente (Ctrl+U)
-           no verás ningún producto aquí. JavaScript (csr.js) lo llena DESPUÉS
-           de que la página ya cargó: por eso es "Renderizado en el Cliente" (CSR). -->
-      <!-- Mientras llegan los datos, 4 tarjetas "esqueleto" (una por producto de
-           catalogo.json) apartan el espacio: así el Carrito no "brinca" hacia
-           abajo cuando csr.js dibuja los productos (Lighthouse lo mide como CLS). -->
-      <div id="catalogo" class="grid" aria-busy="true" aria-label="Cargando catálogo">
-        <div class="producto producto--cargando" aria-hidden="true">
-          <div class="producto__foto"></div>
-          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
-          <button type="button" disabled>Agregar al carrito</button>
+    <div class="tienda-layout">
+      <!-- ---- Sección 1: Catálogo (CSR) ---- -->
+      <section class="catalogo-seccion">
+        <h2>Catálogo</h2>
+        <!-- CSR dibuja aquí los productos de catalogo.json al cargar la página. -->
+        <div id="catalogo" class="grid" aria-busy="true" aria-label="Cargando catálogo">
+          <div class="producto producto--cargando" aria-hidden="true">
+            <div class="producto__foto"></div>
+            <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+            <button type="button" disabled>Agregar al carrito</button>
+          </div>
+          <div class="producto producto--cargando" aria-hidden="true">
+            <div class="producto__foto"></div>
+            <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+            <button type="button" disabled>Agregar al carrito</button>
+          </div>
+          <div class="producto producto--cargando" aria-hidden="true">
+            <div class="producto__foto"></div>
+            <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+            <button type="button" disabled>Agregar al carrito</button>
+          </div>
+          <div class="producto producto--cargando" aria-hidden="true">
+            <div class="producto__foto"></div>
+            <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
+            <button type="button" disabled>Agregar al carrito</button>
+          </div>
         </div>
-        <div class="producto producto--cargando" aria-hidden="true">
-          <div class="producto__foto"></div>
-          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
-          <button type="button" disabled>Agregar al carrito</button>
-        </div>
-        <div class="producto producto--cargando" aria-hidden="true">
-          <div class="producto__foto"></div>
-          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
-          <button type="button" disabled>Agregar al carrito</button>
-        </div>
-        <div class="producto producto--cargando" aria-hidden="true">
-          <div class="producto__foto"></div>
-          <strong>&nbsp;</strong> <span class="precio">&nbsp;</span> <p>&nbsp;</p>
-          <button type="button" disabled>Agregar al carrito</button>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ---- Sección 2: Carrito ---- -->
-    <!-- <section>
-      <h2>Carrito</h2>
-      <ul id="carrito-lista"></ul>
-      <p>Total: $<span id="carrito-total">0</span></p>
-      <button id="btn-sincronizar" type="button">Sincronizar carrito</button>
-      <p id="carrito-mensaje" class="mensaje"></p>
-    </section> -->
+      <aside id="carrito-panel" class="carrito-panel" aria-labelledby="carrito-titulo">
+        <div class="carrito-encabezado">
+          <h2 id="carrito-titulo">Tu pedido</h2>
+          <span class="carrito-estado">Guardado</span>
+        </div>
+        <ul id="carrito-lista"></ul>
+        <p class="carrito-total">Total <span>$<span id="carrito-total">0</span></span></p>
+        <p class="carrito-ayuda">Tu pedido se guarda automáticamente en este dispositivo.</p>
+        <button id="btn-sincronizar" type="button">Sincronizar carrito</button>
+        <p id="carrito-mensaje" class="mensaje"></p>
+      </aside>
+    </div>
+  </main>
 
     <!-- ---- Sección 3: Notificaciones ---- -->
     <!-- <section>
@@ -106,7 +114,7 @@
 
   <!-- Cargamos los scripts al final del <body>: así el HTML ya existe
        cuando el JavaScript intenta buscar los elementos con document.getElementById -->
-  <!-- <script src="js/carrito.js"></script>-->
+  <script src="js/carrito.js"></script>
   <script src="js/csr.js"></script>
   <!--script src="js/notificaciones.js"></script> -->
   <!-- Leaflet debe cargar ANTES de geolocalizacion.js: ese script usa el

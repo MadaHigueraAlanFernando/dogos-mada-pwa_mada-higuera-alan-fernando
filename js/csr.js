@@ -71,6 +71,7 @@ fetch("catalogo.json")
       grupo.appendChild(grid);
       contenedorCatalogo.appendChild(grupo);
     });
+
   })
   .catch((error) => {
     // si algo falla (por ejemplo, sin conexión y sin caché), avisamos en pantalla
