@@ -227,6 +227,22 @@ section h2::before {
 }
 
 /* ---------- Catálogo ---------- */
+.catalogo-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.categoria-catalogo + .categoria-catalogo {
+  margin-top: 2rem;
+}
+.categoria-catalogo__titulo {
+  margin: 0 0 .9rem;
+  padding-bottom: .45rem;
+  color: var(--color-dorado-claro);
+  border-bottom: 1px solid var(--color-borde);
+  font-size: clamp(1.15rem, 2.8vw, 1.4rem);
+  font-weight: 800;
+}
 .grid {
   display: grid;
   gap: 1.1rem;

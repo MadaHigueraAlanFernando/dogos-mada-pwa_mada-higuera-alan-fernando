@@ -11,30 +11,65 @@ fetch("catalogo.json")
   .then((respuesta) => respuesta.json()) // convierte el texto recibido en un array de objetos JS
   .then((productos) => {
     // 3) Ya tenemos los productos: borramos las tarjetas esqueleto y dibujamos las reales
-    contenedorCatalogo.innerHTML = "";
+    contenedorCatalogo.replaceChildren();
+    contenedorCatalogo.classList.replace("grid", "catalogo-categorias");
     contenedorCatalogo.removeAttribute("aria-busy");
     contenedorCatalogo.removeAttribute("aria-label");
 
+    const productosPorCategoria = new Map();
     productos.forEach((producto) => {
-      // creamos un <div class="producto"> por cada producto, desde JavaScript puro
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
+      if (!productosPorCategoria.has(producto.categoria)) {
+        productosPorCategoria.set(producto.categoria, []);
+      }
+      productosPorCategoria.get(producto.categoria).push(producto);
+    });
 
-      // usamos el propio objeto "producto" para llenar el texto (sin plantillas de servidor)
-      tarjeta.innerHTML = `
-        <img class="producto__foto" src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-        <strong>${producto.nombre}</strong>
-        <span class="precio">$${producto.precio}</span>
-        <p>Stock: ${producto.stock}</p>
-        <button type="button" data-id="${producto.id}">Agregar al carrito</button>
-      `;
+    productosPorCategoria.forEach((productosCategoria, categoria) => {
+      const grupo = document.createElement("section");
+      grupo.className = "categoria-catalogo";
 
-      contenedorCatalogo.appendChild(tarjeta);
+      const titulo = document.createElement("h3");
+      titulo.className = "categoria-catalogo__titulo";
+      titulo.textContent = categoria;
+      grupo.appendChild(titulo);
 
-      // conectamos el botón recién creado con la función agregarAlCarrito() de carrito.js
-      tarjeta.querySelector("button").addEventListener("click", () => {
-        agregarAlCarrito(producto);
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      productosCategoria.forEach((producto) => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+
+        const imagen = document.createElement("img");
+        imagen.className = "producto__foto";
+        imagen.src = producto.imagen;
+        imagen.alt = producto.nombre;
+        imagen.loading = "lazy";
+
+        const nombre = document.createElement("strong");
+        nombre.textContent = producto.nombre;
+
+        const precio = document.createElement("span");
+        precio.className = "precio";
+        precio.textContent = `$${producto.precio}`;
+
+        const stock = document.createElement("p");
+        stock.textContent = `Stock: ${producto.stock}`;
+
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.dataset.id = producto.id;
+        boton.textContent = "Agregar al carrito";
+        boton.addEventListener("click", () => {
+          agregarAlCarrito(producto);
+        });
+
+        tarjeta.append(imagen, nombre, precio, stock, boton);
+        grid.appendChild(tarjeta);
       });
+
+      grupo.appendChild(grid);
+      contenedorCatalogo.appendChild(grupo);
     });
   })
   .catch((error) => {
