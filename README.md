@@ -12,7 +12,16 @@
 
 | Avance | Hash del commit entregado | Fecha |
 |---|---|---|
-| 1 | (3bd6160) | 11/10/2026 |
-| 2 | (c7e4bd2) | 17/10/2026 |
+| 1 | (78e309383951a55b9333ebf9ee930c943f4026fb) | 11/10/2026 |
+| 2 | (f85a0b371cd9fd0e02ff7e4daa3ea350da3521f6) | 18/10/2026 |
 | 3 | (hash del avance 3) | 25/10/2026 |
-| 4 | (se escribe en el reporte PDF) | 01/11/2026 |
+| 4 | (se escribe en el reporte PDF) | 01/11/2026|
+
+
+## Comparación SSR vs CSR
+
+### SSR (Django): los productos llegan escritos en el HTML
+![Código fuente SSR](docs/captura-ssr.png)
+
+### CSR (JavaScript): el div del catálogo llega vacío
+![Código fuente CSR](docs/captura-csr.png)
