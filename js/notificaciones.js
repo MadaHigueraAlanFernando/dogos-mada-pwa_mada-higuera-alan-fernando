@@ -1,32 +1,44 @@
-// notificaciones.js — Notification API
-// Esta es la API del NAVEGADOR (no del sistema push completo, que necesitaría
-// un servidor con claves VAPID). Sirve para mostrar avisos del lado del cliente
-// y para entender el permiso que el usuario debe conceder.
+// Muestra una notificación de prueba del navegador cuando el usuario lo solicita.
 
 document.addEventListener("DOMContentLoaded", () => {
   const boton = document.getElementById("btn-notificar");
   const mensaje = document.getElementById("notificaciones-mensaje");
+  if (!boton || !mensaje) return;
 
-  boton.addEventListener("click", () => {
-    // "Notification" no existe en todos los navegadores/contextos; lo comprobamos primero
+  boton.addEventListener("click", async () => {
     if (!("Notification" in window)) {
       mensaje.textContent = "Este navegador no soporta notificaciones.";
       return;
     }
+    if (!window.isSecureContext) {
+      mensaje.textContent = "Las notificaciones requieren HTTPS o abrir el sitio desde localhost.";
+      return;
+    }
 
-    // Notification.requestPermission() abre el diálogo del navegador
-    // ("bloquear" / "permitir"). Devuelve una promesa con la respuesta del usuario.
-    Notification.requestPermission().then((permiso) => {
+    boton.disabled = true;
+    try {
+      const permiso =
+        Notification.permission === "default"
+          ? await Notification.requestPermission()
+          : Notification.permission;
+
       if (permiso === "granted") {
-        // Creamos una notificación de prueba. title, luego un objeto con opciones.
-        new Notification("Tienda Escolar", {
-          body: "¡Listo! Te avisaremos cuando haya nuevas ofertas.",
-          icon: "icons/icon.svg",
+        new Notification("Dogos Mada", {
+          body: "¡Dogos Mada ya puede mostrarte avisos en este dispositivo!",
+          icon: "icons/icon-192.png",
         });
-        mensaje.textContent = "Notificaciones activadas.";
+        mensaje.textContent = "Notificaciones activadas en este dispositivo.";
+      } else if (permiso === "denied") {
+        mensaje.textContent =
+          "Las notificaciones están bloqueadas. Puedes habilitarlas desde la configuración del navegador.";
       } else {
-        mensaje.textContent = "No diste permiso para notificaciones.";
+        mensaje.textContent = "No se concedió permiso para las notificaciones.";
       }
-    });
+    } catch (error) {
+      console.error("No se pudo mostrar la notificación:", error);
+      mensaje.textContent = "No se pudo activar la notificación. Intenta de nuevo.";
+    } finally {
+      boton.disabled = false;
+    }
   });
 });

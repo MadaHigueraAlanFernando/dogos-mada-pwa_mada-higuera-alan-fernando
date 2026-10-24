@@ -234,9 +234,13 @@ main {
   gap: 1.25rem;
 }
 .catalogo-seccion { min-width: 0; }
+.tienda-sidebar {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+.tienda-sidebar > section { margin-bottom: 0; }
 .carrito-panel {
-  position: sticky;
-  top: 7.5rem;
   min-width: 0;
   padding: 1rem;
   color: var(--color-fondo);
@@ -245,7 +249,6 @@ main {
   border-top: 4px solid var(--color-dorado);
   border-radius: var(--radio-tarjeta);
   box-shadow: var(--sombra);
-  scroll-margin-top: 7.5rem;
 }
 .carrito-encabezado {
   display: flex;
@@ -461,7 +464,8 @@ button:active {
 /* .mapa: contenedor de Leaflet. Necesita una altura explícita en px/rem;
    si se deja en 0 o "auto", Leaflet no tiene dónde dibujar los tiles. */
 .mapa {
-  height: 280px;
+  width: 100%;
+  height: 360px;
   border-radius: var(--radio-control);
   margin-top: .75rem;
   border: 2px solid var(--color-dorado);
@@ -669,11 +673,18 @@ button:active {
 
 @media (max-width: 900px) {
   .tienda-layout { grid-template-columns: minmax(0, 1fr); }
-  .carrito-panel { position: static; }
+  .tienda-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .carrito-panel { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  .tienda-sidebar { grid-template-columns: minmax(0, 1fr); }
+  .carrito-panel { grid-column: auto; }
 }
 
 @media (max-width: 480px) {
   section { padding: 1rem 1rem 1.25rem; }
+  .mapa { height: 320px; }
 }
 
 @media (max-width: 360px) {

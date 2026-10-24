@@ -11,7 +11,7 @@
   <!-- Estas 3 líneas son las que convierten este sitio en una PWA instalable -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#CA8A04">
-  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/DogosMada.jpg" type="image/jpeg">
 
   <link rel="stylesheet" href="css/estilos.css">
 
@@ -75,64 +75,42 @@
         </div>
       </section>
 
-      <aside id="carrito-panel" class="carrito-panel" aria-labelledby="carrito-titulo">
-        <div class="carrito-encabezado">
-          <h2 id="carrito-titulo">Tu pedido</h2>
-          <span class="carrito-estado">Guardado</span>
-        </div>
-        <ul id="carrito-lista"></ul>
-        <p class="carrito-total">Total <span>$<span id="carrito-total">0</span></span></p>
-        <p class="carrito-ayuda">Tu pedido se guarda automáticamente en este dispositivo.</p>
-        <button id="btn-sincronizar" type="button">Sincronizar carrito</button>
-        <p id="carrito-mensaje" class="mensaje"></p>
-      </aside>
+      <div class="tienda-sidebar">
+        <aside id="carrito-panel" class="carrito-panel" aria-labelledby="carrito-titulo">
+          <div class="carrito-encabezado">
+            <h2 id="carrito-titulo">Tu pedido</h2>
+            <span class="carrito-estado">Guardado</span>
+          </div>
+          <ul id="carrito-lista"></ul>
+          <p class="carrito-total">Total <span>$<span id="carrito-total">0</span></span></p>
+          <p class="carrito-ayuda">Tu pedido se guarda automáticamente en este dispositivo.</p>
+          <button id="btn-sincronizar" type="button">Sincronizar carrito</button>
+          <p id="carrito-mensaje" class="mensaje"></p>
+        </aside>
+
+        <section aria-labelledby="notificaciones-titulo">
+          <h2 id="notificaciones-titulo">Notificaciones de ofertas</h2>
+          <p>Activa un aviso de prueba en este dispositivo.</p>
+          <button id="btn-notificar" type="button">Activar notificaciones</button>
+          <p id="notificaciones-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </section>
+
+        <section aria-labelledby="ubicacion-titulo">
+          <h2 id="ubicacion-titulo">Distancia a la sucursal</h2>
+          <p class="sucursal-info">Sucursal: <strong>Universidad Tecnológica de Hermosillo (UTH)</strong>, Hermosillo, Sonora.</p>
+          <button id="btn-ubicacion" type="button">Usar mi ubicación</button>
+          <p id="ubicacion-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+          <div id="mapa-ruta" class="mapa" hidden></div>
+        </section>
+      </div>
     </div>
   </main>
 
-    <!-- ---- Sección 3: Notificaciones ---- -->
-    <!-- <section>
-      <h2>Notificaciones de ofertas</h2>
-      <button id="btn-notificar" type="button">Activar notificaciones</button>
-      <p id="notificaciones-mensaje" class="mensaje"></p>
-    </section> -->
-
-    <!-- ---- Sección 4: Ubicación (característica del dispositivo) ---- -->
-    <!-- <section>
-      <h2>Distancia a la sucursal</h2>
-      <p class="sucursal-info">Sucursal única: <strong>Universidad Tecnológica de Hermosillo (UTH)</strong>, Hermosillo, Sonora.</p>
-      <button id="btn-ubicacion" type="button">Usar mi ubicación</button>
-      <p id="ubicacion-mensaje" class="mensaje"></p> -->
-      <!-- Empieza oculto: geolocalizacion.js le quita "hidden" y lo llena de mapa
-           en cuanto tiene tu ubicación y la ruta hasta la sucursal -->
-      <!-- <div id="mapa-ruta" class="mapa" hidden></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>Unidad 2 · PWA de ventas de ejemplo</p>
-  </footer> -->
-
-  <!-- Cargamos los scripts al final del <body>: así el HTML ya existe
-       cuando el JavaScript intenta buscar los elementos con document.getElementById -->
   <script src="js/carrito.js"></script>
   <script src="js/csr.js"></script>
-  <!--script src="js/notificaciones.js"></script> -->
-  <!-- Leaflet debe cargar ANTES de geolocalizacion.js: ese script usa el
-       objeto global "L" que esta librería crea -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/notificaciones.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script src="js/geolocalizacion.js"></script>
-  <script src="js/app.js"></script> -->
-  <!-- Registro del Service Worker. Va aquí, dentro del HTML y en una sola línea
-       (navigator.serviceWorker.register("sw.js")), porque así lo detecta PWABuilder:
-       lee el index.html buscando ese texto, y si no lo halla abre la página y pregunta
-       de inmediato si ya hay un Service Worker; por eso no esperamos al evento "load". -->
-  <!-- <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js")
-        .then((registro) => console.log("Service Worker registrado con éxito:", registro.scope))
-        .catch((error) => console.error("No se pudo registrar el Service Worker:", error));
-    }
-  </script> -->
 
   <footer class="pie">
     <p>Dogueria Mada · hot dogs sonorenses</p>
