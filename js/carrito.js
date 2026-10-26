@@ -33,6 +33,7 @@ function agregarAlCarrito(producto) {
 
   guardarCarrito(carrito);
   pintarCarrito();
+  if (typeof avisar === "function") avisar("Pedido agregado", `${producto.nombre} se agregó a tu pedido.`);
 }
 
 // Sube o baja la cantidad de un producto ya en el carrito con los botones +/-;
@@ -140,18 +141,32 @@ function manejarClicCarrito(evento) {
 }
 
 // "Sincronizar": en una app real esto haría un fetch() con method: "POST" al
-// servidor. Aquí lo simulamos para enseñar el patrón offline -> online.
+// servidor. Aquí lo simulamos. Si no hay conexión, el carrito queda pendiente
+// y se "envía" solo cuando el navegador dispara el evento "online".
+const CLAVE_PENDIENTE = "tienda-escolar-carrito-pendiente";
+
 function sincronizarCarrito() {
   const mensaje = document.getElementById("carrito-mensaje");
+  const carrito = leerCarrito();
+
+  if (carrito.length === 0) {
+    mensaje.textContent = "Tu carrito está vacío: no hay nada que sincronizar.";
+    localStorage.removeItem(CLAVE_PENDIENTE);
+    return;
+  }
 
   if (!navigator.onLine) {
     // navigator.onLine: propiedad del navegador que dice si hay conexión
+    localStorage.setItem(CLAVE_PENDIENTE, "1");
     mensaje.textContent = "Sin conexión: el carrito se sincronizará cuando vuelva el internet.";
     return;
   }
 
   // Aquí iría: fetch("https://mi-api.com/carrito", { method: "POST", body: ... })
-  mensaje.textContent = "Carrito sincronizado con el servidor (simulado). ✓";
+  localStorage.removeItem(CLAVE_PENDIENTE);
+  const piezas = carrito.reduce((suma, item) => suma + item.cantidad, 0);
+  mensaje.textContent = `Carrito sincronizado con el servidor (simulado): ${piezas} producto(s). ✓`;
+  if (typeof avisar === "function") avisar("Pedido enviado", "Volvió la conexión y tu pedido se envió.");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -160,7 +175,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-sincronizar").addEventListener("click", sincronizarCarrito);
 
   // Estos dos eventos del navegador avisan cuando se pierde o regresa la conexión
-  window.addEventListener("online", sincronizarCarrito);
+  window.addEventListener("online", () => {
+    if (localStorage.getItem(CLAVE_PENDIENTE)) sincronizarCarrito();
+  });
   window.addEventListener("offline", () => {
     document.getElementById("carrito-mensaje").textContent = "Se perdió la conexión.";
   });

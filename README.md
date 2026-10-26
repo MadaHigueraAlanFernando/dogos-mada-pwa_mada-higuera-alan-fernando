@@ -13,7 +13,7 @@
 | Avance | Hash del commit entregado | Fecha |
 |---|---|---|
 | 1 | (78e309383951a55b9333ebf9ee930c943f4026fb) | 11/10/2026 |
-| 2 | (f85a0b371cd9fd0e02ff7e4daa3ea350da3521f6) | 18/10/2026 |
+| 2 | (fe71cd331a261218f5d94546af2dc55a6b1fb2fd) | 18/10/2026 |
 | 3 | (hash del avance 3) | 25/10/2026 |
 | 4 | (se escribe en el reporte PDF) | 01/11/2026|
 
@@ -25,3 +25,11 @@
 
 ### CSR (JavaScript): el div del catálogo llega vacío
 ![Código fuente CSR](docs/captura-csr.png)
+
+## Funciones PWA (avance 3)
+
+### index.html: manifest y registro del Service Worker activos
+![Código fuente index.html](docs/captura-index-pwa.png)
+
+### sw.js: Workbox precachea el catálogo y las fotos
+![Código fuente sw.js](docs/captura-sw.png)

@@ -1,5 +1,19 @@
 // Muestra una notificación de prueba del navegador cuando el usuario lo solicita.
 
+// Muestra una notificación útil (pedido agregado / enviado) si el usuario ya
+// dio permiso. Usa el Service Worker cuando existe; si no, Notification normal.
+async function avisar(titulo, cuerpo) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  const opciones = { body: cuerpo, icon: "icons/icon-192.png" };
+  try {
+    const registro = "serviceWorker" in navigator && (await navigator.serviceWorker.getRegistration());
+    if (registro) registro.showNotification(titulo, opciones);
+    else new Notification(titulo, opciones);
+  } catch (error) {
+    console.error("No se pudo mostrar el aviso:", error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const boton = document.getElementById("btn-notificar");
   const mensaje = document.getElementById("notificaciones-mensaje");
