@@ -14,7 +14,7 @@
 |---|---|---|
 | 1 | (78e309383951a55b9333ebf9ee930c943f4026fb) | 11/10/2026 |
 | 2 | (fe71cd331a261218f5d94546af2dc55a6b1fb2fd) | 18/10/2026 |
-| 3 | (c8961528ca536984320a93165d6fd60c9d3e9731) | 25/10/2026 |
+| 3 | (d37af873ebdaa8d92cfec9b113525e410669963b) | 25/10/2026 |
 | 4 | (se escribe en el reporte PDF) | 01/11/2026|
 
 
@@ -33,3 +33,12 @@
 
 ### sw.js: Workbox precachea el catálogo y las fotos
 ![Código fuente sw.js](docs/captura-sw.png)
+
+## Auditoría Lighthouse (avance 4)
+
+Auditoría hecha sobre la URL publicada en GitHub Pages con `npx lighthouse`.
+
+| Reporte | Performance | Accesibilidad | Buenas prácticas | SEO |
+|---|---|---|---|---|
+| [Móvil](docs/lighthouse-movil.html) | 95 | 100 | 100 | 100 |
+| [Escritorio](docs/lighthouse-escritorio.html) | 98 | 100 | 100 | 100 |
